@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  webmvc:
+    container_name: web
+    image: sibghat/web
+    environment:
+      - FLSK__api=http://flskapp:5000/api/card/
+      - FLSK__root=http://flskapp:5000
+      - ASPNETCORE_URLS=http://+:81
+    expose:
+      - 81  
+    ports:
+      - "5006:81"
+    depends_on:
+      - flskapp
+    # volumes:
+    #  - E:\Volumes\web:/var/lib/web
+    networks:
+       default:
+                aliases:
+                    - fa
+
+  flskapp:
+    container_name: flskappp
+    image: sibghat/flask
+    expose:
+      - "5000"
+    ports:
+      - "5005:5000"
+    # volumes:
+    #   - E:\Volumes\fl:/var/lib/fldata
+    networks:
+       default:
+                aliases:
+                    - fa
+  catss:
+   container_name: scripts-container
+   image: sibghat/pscript
+   command: tail -f /dev/null
+  #  volumes:
+  #     - E:\Volumes\py:/var/lib/pydata
+  #  expose:
+  #   - "5000"
+  #  ports:
+  #   - "5005:5000"
+   networks:
+      default:
+              aliases:
+                  - fa                  
+
+    
